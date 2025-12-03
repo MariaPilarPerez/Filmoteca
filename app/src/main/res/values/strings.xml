@@ -3,4 +3,6 @@
     <string name="ir_al_sitio_web">Ir al sitio web</string>
     <string name="obtener_soporte">Obtener soporte</string>
     <string name="volver">Volver</string>
+    <string name="funcionalidad_sin_implementar">Funcionalidad sin implementar</string>
+    <string name="creado_por_pilar">Creado por María Pilar Pérez Gómez</string>
 </resources>

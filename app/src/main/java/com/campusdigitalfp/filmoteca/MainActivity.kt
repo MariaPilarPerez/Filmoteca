@@ -59,7 +59,7 @@ fun AboutScreen(modifier: Modifier=Modifier){
         horizontalAlignment = Alignment.CenterHorizontally
         )
        {
-        Text(text="Creado por María Pilar Pérez Gómez",
+        Text(text= stringResource(R.string.creado_por_pilar),
             fontSize = 16.sp
             )
         Spacer(modifier.height(16.dp))
@@ -70,19 +70,22 @@ fun AboutScreen(modifier: Modifier=Modifier){
             horizontalArrangement = Arrangement.Absolute.Center
            )
            {
-            Button(onClick = { showToast( context,"Funcionalidad sin implementar")
+            Button(onClick = { showToast( context,
+                context.getString(R.string.funcionalidad_sin_implementar))
                 },
                 modifier.weight(1f))  {
                 Text(text= stringResource(R.string.ir_al_sitio_web))}
                Spacer(modifier.width(8.dp))
-               Button(onClick = {showToast( context,"Funcionalidad sin implementar")
+               Button(onClick = {showToast( context,
+                   context.getString(R.string.funcionalidad_sin_implementar))
                 },
                 modifier.weight(1f)) {
                 Text(text= stringResource(R.string.obtener_soporte))
             }
         }
            Spacer(modifier.height(8.dp))
-        Button(onClick={showToast( context,"Funcionalidad sin implementar")})
+        Button(onClick={showToast( context,
+            context.getString(R.string.funcionalidad_sin_implementar))})
         {
             Text(text= stringResource(R.string.volver))
         }
