@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
 fun AboutScreen(modifier: Modifier=Modifier){
     //columna con elementos Creado por, seguido de imagen y seguido de row con dos botones
 // y otro elemento de la columna al final que es un boton
+    val context = LocalContext.current
     Column(modifier
         .fillMaxWidth()
         .fillMaxHeight(),
@@ -69,24 +70,27 @@ fun AboutScreen(modifier: Modifier=Modifier){
             horizontalArrangement = Arrangement.Absolute.Center
            )
            {
-            Button(onClick = { //showToast()//
+            Button(onClick = { showToast( context,"Funcionalidad sin implementar")
                 },
                 modifier.weight(1f))  {
                 Text(text= stringResource(R.string.ir_al_sitio_web))}
                Spacer(modifier.width(8.dp))
-               Button(onClick = {}, modifier.weight(1f)) {
+               Button(onClick = {showToast( context,"Funcionalidad sin implementar")
+                },
+                modifier.weight(1f)) {
                 Text(text= stringResource(R.string.obtener_soporte))
             }
         }
            Spacer(modifier.height(8.dp))
-        Button(onClick={}) {
+        Button(onClick={showToast( context,"Funcionalidad sin implementar")})
+        {
             Text(text= stringResource(R.string.volver))
         }
         }
     }
-@Composable
- fun showToast(context: Context, message: String){
-     val context = LocalContext.current
+
+//Aqui no se pone composable.
+fun showToast(context: Context, message: String){
      Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
