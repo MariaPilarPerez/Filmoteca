@@ -6,4 +6,5 @@
     <string name="volver">Return</string>
     <string name="funcionalidad_sin_implementar">Unimplemented functionality</string>
     <string name="creado_por_pilar">Created by María Pilar Pérez Gómez</string>
+    <string name="incidencia_con_filmoteca">There has been an issue with the Filmoteca app,\n</string>
 </resources>

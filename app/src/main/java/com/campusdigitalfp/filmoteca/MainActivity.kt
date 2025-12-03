@@ -1,6 +1,8 @@
 package com.campusdigitalfp.filmoteca
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.textclassifier.ConversationActions
 import android.widget.Toast
@@ -70,14 +72,16 @@ fun AboutScreen(modifier: Modifier=Modifier){
             horizontalArrangement = Arrangement.Absolute.Center
            )
            {
-            Button(onClick = { showToast( context,
-                context.getString(R.string.funcionalidad_sin_implementar))
+            Button(onClick = {abrirPaginaWeb("https://www.filmaffinity.com/es/main.html",
+                context)
+                //showToast( context,
+                //context.getString(R.string.funcionalidad_sin_implementar))
                 },
                 modifier.weight(1f))  {
                 Text(text= stringResource(R.string.ir_al_sitio_web))}
                Spacer(modifier.width(8.dp))
-               Button(onClick = {showToast( context,
-                   context.getString(R.string.funcionalidad_sin_implementar))
+               Button(onClick = {mandarEmail(context,"mdpperezgy@fpvirtualaragon.es",
+                   context.getString(R.string.incidencia_con_filmoteca))
                 },
                 modifier.weight(1f)) {
                 Text(text= stringResource(R.string.obtener_soporte))
@@ -96,8 +100,19 @@ fun AboutScreen(modifier: Modifier=Modifier){
 fun showToast(context: Context, message: String){
      Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
-
-
+fun abrirPaginaWeb(url:String, context: Context){
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        data= Uri.parse(url)
+    }
+    context.startActivity(intent)
+}
+fun mandarEmail(context: Context, email: String, asunto: String){
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto: $email")
+        putExtra(Intent.EXTRA_SUBJECT, asunto)
+    }
+    context.startActivity(intent)
+}
 
 @Preview(showBackground = true)
 @Composable
