@@ -23,7 +23,8 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 
 @Composable
-fun FilmListScreen(navController: NavHostController)
+fun FilmListScreen()
+  //  navController: NavHostController)
 {
     Column(
         modifier = Modifier.fillMaxHeight()
@@ -47,12 +48,12 @@ fun FilmListScreen(navController: NavHostController)
         }
     }
 }
-//@Preview(showBackground = true)
-//@Composable
-//fun Verlistafilms ()
-//{
-//    FilmotecaTheme {
-//        FilmListScreen()
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun Verlistafilms()
+{
+    FilmotecaTheme {
+        FilmListScreen()
+    }
+}
 

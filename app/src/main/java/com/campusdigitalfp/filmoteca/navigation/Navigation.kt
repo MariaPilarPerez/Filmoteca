@@ -16,7 +16,7 @@ fun Navigation ()
     NavHost(navController = navController, startDestination = "lista")
     {
         composable ("inicio") {AboutScreen(navController)}
-        composable ("lista"){ FilmListScreen(navController) }
+        composable ("lista"){ FilmListScreen() }
 
     }
 }
