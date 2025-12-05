@@ -7,6 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.campusdigitalfp.filmoteca.AboutScreen
+import com.campusdigitalfp.filmoteca.screens.FilmDataScreen
+import com.campusdigitalfp.filmoteca.screens.FilmEditScreen
 import com.campusdigitalfp.filmoteca.screens.FilmListScreen
 
 @Composable
@@ -15,8 +17,10 @@ fun Navigation ()
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "lista")
     {
-        composable ("inicio") {AboutScreen(navController)}
-        composable ("lista"){ FilmListScreen() }
+        composable ("about") {AboutScreen(navController)}
+        composable ("lista"){ FilmListScreen(navController) }
+        composable ("editar"){ FilmEditScreen(navController) }
+        composable("datosfilm"){ FilmDataScreen(navController) }
 
     }
 }

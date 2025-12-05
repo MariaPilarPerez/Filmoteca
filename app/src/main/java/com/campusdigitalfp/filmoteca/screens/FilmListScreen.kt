@@ -23,8 +23,7 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 
 @Composable
-fun FilmListScreen()
-  //  navController: NavHostController)
+fun FilmListScreen(navController: NavHostController)
 {
     Column(
         modifier = Modifier.fillMaxHeight()
@@ -32,15 +31,15 @@ fun FilmListScreen()
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = {})
+        Button(onClick = {navController.navigate("datosfilm")})
         {
             Text(text = stringResource(R.string.ver_pelicula_A))
         }
-        Button(onClick = {})
+        Button(onClick = {navController.navigate("datosfilm")})
         {
             Text(text = stringResource(R.string.ver_pelicula_B))
         }
-        Button(onClick = { })
+        Button(onClick = {navController.navigate("about") })
         {
             Text(text = stringResource(R.string.acerca_De))
 
@@ -48,12 +47,12 @@ fun FilmListScreen()
         }
     }
 }
-@Preview(showBackground = true)
-@Composable
-fun Verlistafilms()
-{
-    FilmotecaTheme {
-        FilmListScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun Verlistafilms()
+//{
+//    FilmotecaTheme {
+//        FilmListScreen()
+//    }
+//}
 

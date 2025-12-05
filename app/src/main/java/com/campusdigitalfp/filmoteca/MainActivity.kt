@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FilmotecaTheme {
-                FilmListScreen()
+                Navigation()
                 }
             }
         }
@@ -66,7 +66,7 @@ fun AboutScreen(navController: NavHostController) {
         )
         {
             Text(
-                text= stringResource(R.string.creado_por_pilar_perez),
+                text= stringResource(R.string.creado_por_pilar),
                 fontSize = 16.sp
             )
             Spacer(modifier=Modifier.height(16.dp))
@@ -106,13 +106,9 @@ fun AboutScreen(navController: NavHostController) {
                     Text(text = stringResource(R.string.obtener_soporte))
                 }
             }
-            Spacer(modifier=Modifier.height(8.dp))
+            //Spacer(modifier=Modifier.height(4.dp))
             Button(onClick = {
-                showToast(
-                    context,
-                    context.getString(R.string.funcionalidad_sin_implementar)
-                )
-            })
+                navController.navigate("lista")})
             {
                 Text(text = stringResource(R.string.volver))
             }

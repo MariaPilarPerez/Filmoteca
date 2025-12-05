@@ -16,6 +16,7 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
@@ -23,7 +24,7 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 // una columna con un texto y tres botones
 
 @Composable
-fun FilmDataScreen()
+fun FilmDataScreen(navController: NavHostController)
 {
     Column(
         modifier = Modifier
@@ -38,26 +39,26 @@ fun FilmDataScreen()
             modifier = Modifier.padding(8.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        Button(onClick = {})
+        Button(onClick = {navController.navigate("datosfilm")})
         {
             Text(text = stringResource(R.string.ver_pelicula_relacionada))
         }
-        Button(onClick = {/*implementar */ })
+        Button(onClick = {navController.navigate("editar") })
         {
             Text(text = stringResource(R.string.editar_pelicula))
         }
-        Button(onClick = {/*implementar */ })
+        Button(onClick = {navController.popBackStack("lista",false) })
         {
             Text(text = stringResource(R.string.volver_a_la_principal))
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun VistaDatoFilm()
-{
-    FilmotecaTheme {
-        FilmDataScreen()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun VistaDatoFilm()
+//{
+//    FilmotecaTheme {
+//        FilmDataScreen()
+//    }
+//}
