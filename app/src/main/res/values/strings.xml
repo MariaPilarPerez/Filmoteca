@@ -6,4 +6,12 @@
     <string name="funcionalidad_sin_implementar">Funcionalidad sin implementar</string>
     <string name="creado_por_pilar">Creado por María Pilar Pérez Gómez</string>
     <string name="incidencia_con_filmoteca">Ha habido una incidencia en la app Filmoteca,\n</string>
+    <string name="ver_pelicula_A">Ver pelicula A</string>
+    <string name="ver_pelicula_B">Ver pelicula B</string>
+    <string name="acerca_De">Acerca de</string>
+    <string name="ver_pelicula_relacionada">Ver pelicula relacionada</string>
+    <string name="editar_pelicula">Editar pelicula</string>
+    <string name="volver_a_la_principal">Volver a la principal</string>
+    <string name="creado_por_mar_a_pilar_p_rez">Creado por María Pilar Pérez</string>
+    <string name="creado_por_pilar_perez">Creado por María Pilar Pérez Gómez</string>
 </resources>

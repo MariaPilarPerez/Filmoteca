@@ -7,4 +7,12 @@
     <string name="funcionalidad_sin_implementar">Unimplemented functionality</string>
     <string name="creado_por_pilar">Created by María Pilar Pérez Gómez</string>
     <string name="incidencia_con_filmoteca">There has been an issue with the Filmoteca app,\n</string>
+    <string name="ver_pelicula_A">Show film A</string>
+    <string name="ver_pelicula_B">Show film B</string>
+    <string name="acerca_De">About this</string>
+    <string name="ver_pelicula_relacionada">Ver pelicula relacionada</string>
+    <string name="editar_pelicula">Editar pelicula</string>
+    <string name="volver_a_la_principal">Volver a la principal</string>
+    <string name="creado_por_mar_a_pilar_p_rez">Creado por María Pilar Pérez</string>
+    <string name="creado_por_pilar_perez">Creado por María Pilar Pérez Gómez</string>
 </resources>
