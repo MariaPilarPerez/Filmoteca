@@ -47,7 +47,10 @@ fun FilmDataScreen(navController: NavHostController)
         {
             Text(text = stringResource(R.string.editar_pelicula))
         }
-        Button(onClick = {navController.popBackStack("lista",false) })
+        Button(onClick = {navController.navigate("lista")
+                 {popUpTo("lista")
+                 {inclusive=true}}
+         })
         {
             Text(text = stringResource(R.string.volver_a_la_principal))
         }
