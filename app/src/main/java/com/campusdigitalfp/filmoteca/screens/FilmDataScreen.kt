@@ -12,10 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
@@ -24,7 +27,7 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 // una columna con un texto y tres botones
 
 @Composable
-fun FilmDataScreen(navController: NavHostController)
+fun FilmDataScreen(navController: NavHostController, titulo: String)
 {
     Column(
         modifier = Modifier
@@ -34,12 +37,18 @@ fun FilmDataScreen(navController: NavHostController)
         horizontalAlignment = Alignment.CenterHorizontally
     )
     {
+        Text(text=titulo,
+            color = Color.Blue,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold
+
+        )
         Text(
             text = stringResource(R.string.datos_de_la_pelicula),
             modifier = Modifier.padding(8.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        Button(onClick = {navController.navigate("datosfilm")})
+        Button(onClick = {navController.navigate("datosfilm/$titulo")})
         {
             Text(text = stringResource(R.string.ver_pelicula_relacionada))
         }
@@ -57,11 +66,9 @@ fun FilmDataScreen(navController: NavHostController)
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun VistaDatoFilm()
+// en el enunciado del ejercicio 10: dice que deberemos navegar a otra pantalla pasando un argumento
+// con el nombre de la pelicula, pero creo que es lo que he puesto en la linea 51,
+//Button(onClick = {navController.navigate("datosfilm/$titulo")})
 //{
-//    FilmotecaTheme {
-//        FilmDataScreen()
-//    }
-//}
+//    Text(text = stringResource(R.string.ver_pelicula_relacionada))
+// que es volveer a mostrar la misma pantalla, ya que si no, termina la aplicación

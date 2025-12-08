@@ -20,7 +20,12 @@ fun Navigation ()
         composable ("about") {AboutScreen(navController)}
         composable ("lista"){ FilmListScreen(navController) }
         composable ("editar"){ FilmEditScreen(navController) }
-        composable("datosfilm"){ FilmDataScreen(navController) }
+        composable("datosfilm/{titulo}") { backStackEntry ->
+            val titulo = backStackEntry.arguments?.getString("titulo")
+            if (titulo != null) {
+                FilmDataScreen(navController, titulo)
+            }
+        }
 
     }
 }
