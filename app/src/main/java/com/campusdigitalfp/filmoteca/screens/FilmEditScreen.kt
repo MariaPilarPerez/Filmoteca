@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,12 +34,16 @@ fun FilmEditScreen (navController: NavHostController)
         Text(
             text="Editando película")
         Spacer(modifier=Modifier.height(8.dp))
-        Button(onClick = {navController.popBackStack()})
+        Button(onClick = {navController.previousBackStackEntry?.savedStateHandle?.set("key_result",
+              "RESULT_OK")
+                navController.popBackStack()})
         {
             Text(text= stringResource(R.string.guardar))
         }
         Spacer(modifier=Modifier.height(8.dp))
-        Button(onClick = {navController.navigate("lista")})
+        Button(onClick = {navController.previousBackStackEntry?.savedStateHandle?.set("key_result",
+            "RESULT_CANCELED")
+            navController.popBackStack()})
         {
             Text(text= stringResource(R.string.cancelar))
         }

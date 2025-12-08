@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +30,9 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 @Composable
 fun FilmDataScreen(navController: NavHostController, titulo: String)
 {
+    val savedStateHandle=navController.currentBackStackEntry?.savedStateHandle
+    val context = LocalContext.current
+   // val result by savedStateHandle.getLiveData<String>("key_result").observeAsState()
     Column(
         modifier = Modifier
            .fillMaxHeight()
