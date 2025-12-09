@@ -47,12 +47,3 @@ fun FilmListScreen(navController: NavHostController)
         }
     }
 }
-//@Preview(showBackground = true)
-//@Composable
-//fun Verlistafilms()
-//{
-//    FilmotecaTheme {
-//        FilmListScreen()
-//    }
-//}
-

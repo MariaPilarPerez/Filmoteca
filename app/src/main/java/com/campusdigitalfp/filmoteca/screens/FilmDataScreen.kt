@@ -27,21 +27,23 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 //mostrar los datos de una pelicula
 // una columna con un texto y tres botones
 
+
 @Composable
-fun FilmDataScreen(navController: NavHostController, titulo: String)
-{
-    val savedStateHandle=navController.currentBackStackEntry?.savedStateHandle
+fun FilmDataScreen(navController: NavHostController, titulo: String) {
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     val context = LocalContext.current
-   // val result by savedStateHandle.getLiveData<String>("key_result").observeAsState()
+    val result: String? = savedStateHandle?.get("key_result")
+
     Column(
         modifier = Modifier
-           .fillMaxHeight()
-           .fillMaxWidth(),
+            .fillMaxHeight()
+            .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     )
     {
-        Text(text=titulo,
+        Text(
+            text = titulo,
             color = Color.Blue,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
@@ -52,23 +54,35 @@ fun FilmDataScreen(navController: NavHostController, titulo: String)
             modifier = Modifier.padding(8.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        Button(onClick = {navController.navigate("datosfilm/$titulo")})
+        Button(onClick = { navController.navigate("datosfilm/$titulo") })
         {
             Text(text = stringResource(R.string.ver_pelicula_relacionada))
         }
-        Button(onClick = {navController.navigate("editar") })
+        Button(onClick = { navController.navigate("editar") })
         {
             Text(text = stringResource(R.string.editar_pelicula))
+
         }
-        Button(onClick = {navController.navigate("lista")
-                 {popUpTo("lista")
-                 {inclusive=true}}
-         })
+        if (!result.equals(null)) {
+            Text(
+                text = if (result.equals("RESULT_OK")) "Edición guardada"
+                else "Edición Cancelada" //al haber solo dos resultados, me sirve la sentencia if
+            )
+        }
+
+        Button(onClick = {
+            navController.navigate("lista")
+            {
+                popUpTo("lista")
+                { inclusive = true }
+            }
+        })
         {
             Text(text = stringResource(R.string.volver_a_la_principal))
         }
     }
 }
+
 
 // en el enunciado del ejercicio 10: dice que deberemos navegar a otra pantalla pasando un argumento
 // con el nombre de la pelicula, pero creo que es lo que he puesto en la linea 51,

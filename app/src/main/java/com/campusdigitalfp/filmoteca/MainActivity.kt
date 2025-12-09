@@ -135,11 +135,3 @@ fun AboutScreen(navController: NavHostController) {
         context.startActivity(intent)
     }
 
-/*@Preview(showBackground = true)
-@Composable
-fun AboutSreenPreview() {
-    FilmotecaTheme {
-       AboutScreen()
-    }
-}
- */
