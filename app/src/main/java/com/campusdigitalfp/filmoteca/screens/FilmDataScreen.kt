@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.filmoteca.R
+import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 //mostrar los datos de una pelicula
@@ -34,53 +36,59 @@ fun FilmDataScreen(navController: NavHostController, titulo: String) {
     val context = LocalContext.current
     val result: String? = savedStateHandle?.get("key_result")
 
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
-        Text(
-            text = titulo,
-            color = Color.Blue,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+    Scaffold(topBar = { BarraSuperiorComun(navController, true)}, content = { padding ->
 
-        )
-        Text(
-            text = stringResource(R.string.datos_de_la_pelicula),
-            modifier = Modifier.padding(8.dp)
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Button(onClick = { navController.navigate("datosfilm/$titulo") })
-        {
-            Text(text = stringResource(R.string.ver_pelicula_relacionada))
-        }
-        Button(onClick = { navController.navigate("editar") })
-        {
-            Text(text = stringResource(R.string.editar_pelicula))
 
-        }
-        if (!result.equals(null)) {
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+
+
+        {
             Text(
-                text = if (result.equals("RESULT_OK")) "Edición guardada"
-                else "Edición Cancelada" //al haber solo dos resultados, me sirve la sentencia if
-            )
-        }
+                text = titulo,
+                color = Color.Blue,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
 
-        Button(onClick = {
-            navController.navigate("lista")
+            )
+            Text(
+                text = stringResource(R.string.datos_de_la_pelicula),
+                modifier = Modifier.padding(8.dp)
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Button(onClick = { navController.navigate("datosfilm/$titulo") })
             {
-                popUpTo("lista")
-                { inclusive = true }
+                Text(text = stringResource(R.string.ver_pelicula_relacionada))
             }
-        })
-        {
-            Text(text = stringResource(R.string.volver_a_la_principal))
+            Button(onClick = { navController.navigate("editar") })
+            {
+                Text(text = stringResource(R.string.editar_pelicula))
+
+            }
+            Button(onClick = {
+                navController.navigate("lista")
+                {
+                    popUpTo("lista")
+                    { inclusive = true }
+                }
+            })
+            {
+                Text(text = stringResource(R.string.volver_a_la_principal))
+            }
+            if (!result.equals(null)) {
+                Text(modifier=Modifier.padding(top=16.dp),
+                    text = if (result.equals("RESULT_OK")) "Edición guardada"
+                    else "Edición Cancelada" //al haber solo dos resultados, me sirve la sentencia if
+                )
+            }
         }
     }
+    )
 }
 
 

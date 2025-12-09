@@ -34,6 +34,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
 import com.campusdigitalfp.filmoteca.navigation.Navigation
 import com.campusdigitalfp.filmoteca.screens.FilmListScreen
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
@@ -55,10 +56,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AboutScreen(navController: NavHostController) {
+    Scaffold(topBar = { BarraSuperiorComun(navController)}, content = { padding ->
         //columna con elementos Creado por, seguido de imagen y seguido de row con dos botones
         // y otro elemento de la columna al final que es un boton
         val context = LocalContext.current
-        Column(modifier= Modifier
+
+    Column(modifier= Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
@@ -114,6 +117,8 @@ fun AboutScreen(navController: NavHostController) {
             }
         }
     }
+    )
+}
 
     //Aqui no se pone composable.
     fun showToast(context: Context, message: String) {
