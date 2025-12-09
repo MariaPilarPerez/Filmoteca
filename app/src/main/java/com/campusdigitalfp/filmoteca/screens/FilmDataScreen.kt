@@ -1,5 +1,6 @@
 package com.campusdigitalfp.filmoteca.screens
 
+import android.media.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,15 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 //mostrar los datos de una pelicula
 // una columna con un texto y tres botones
+data class film (
+    val imagen: String = "interestelar",
+    val nombrefilm: String = "Interstellar",
+    val director: String ="Christopher Nolan",
+    val estreno: Int = 2014,
+    val genero: String ="Ciencia Ficción",
+    val formato: String ="DVD",
+    val enlaceIMDB: String ="https://m.imdb.com/es-es/title/tt0816692/?ref_=ext_shr_lnk"
+)
 
 
 @Composable
