@@ -2,6 +2,7 @@ package com.campusdigitalfp.filmoteca.screens
 
 import android.media.Image
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.content.MediaType.Companion.Image
 import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsEndWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -29,11 +32,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -53,96 +58,195 @@ fun EditarPantalla()
     var url by remember {mutableStateOf("")}
     var imagen by remember {mutableIntStateOf(0)}
     var comentarios by remember {mutableStateOf("")}
-    var genero by remember{mutableStateOf(false)}
-
+    var expandedgenero by remember{mutableStateOf(false)}
+    var expandedformato by remember { mutableStateOf(false) }
+    val context=LocalContext.current
+    val generoList=context.resources.getStringArray(R.array.genero_list).toList()
+    val formatoList=context.resources.getStringArray(R.array.formato_list).toList()
+    var genero by remember {mutableIntStateOf(0)}
+    var formato by remember {mutableIntStateOf(1)}
+    var selectedGenero = generoList[genero]
+    var selectedFormato = formatoList[formato]
 
     Column(
         modifier=Modifier
             .fillMaxHeight()
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
+            .fillMaxWidth()
+            .padding(top=100.dp),
+
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
 
     )
     {
-        Row ()
+        Row()
         {
-            Image( painter = painterResource(R.drawable.palomitas)
-                , contentDescription = null,
+            Image(
+                painter = painterResource(R.drawable.palomitas), contentDescription = null,
                 Modifier.size(100.dp)
                     .weight(1f)
             )
-            Button(onClick ={},
-                modifier=Modifier.weight(1f)
-                    .padding(top=16.dp),
+            Button(
+                onClick = {},
+                modifier = Modifier.weight(1f)
+                    .padding(top = 16.dp),
             )
             {
                 Text(text = "Capturar fotografía")
             }
-            Spacer(modifier=Modifier
-                .padding(4.dp))
-            Button(onClick = {},
-                modifier=Modifier.weight(1f)
-                    .padding(top=16.dp)
-                    .padding(end=4.dp))
+            Spacer(
+                modifier = Modifier
+                    .padding(4.dp)
+            )
+            Button(
+                onClick = {},
+                modifier = Modifier.weight(1f)
+                    .padding(top = 16.dp)
+                    .padding(end = 4.dp)
+            )
             {
-                Text(text="Seleccionar imagen")
+                Text(text = "Seleccionar imagen")
             }
         }
         TextField(
-            value=titulo,
-            onValueChange = {newText ->titulo=newText},
-            label={Text("Titulo")},
-            placeholder = {Text("Titulo")},
-            modifier=Modifier.fillMaxWidth(),
-            singleLine=true,
+            value = titulo,
+            onValueChange = { newText -> titulo = newText },
+            label = { Text("Titulo") },
+            placeholder = { Text("Titulo") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
+        TextField(
+            value = director,
+            onValueChange = { newText -> director = newText },
+            label = { Text("Director") },
+            placeholder = { Text("Director") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+        var anyo: String = estreno.toString()
+        TextField(
+            value = anyo,
+            onValueChange = { newText -> anyo = newText },
+            label = { Text("Año de estreno") },
+            placeholder = { Text("Año de estreno") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+        TextField(
+            value = url,
+            onValueChange = { newText -> url = newText },
+            label = { Text("Enlace a IMDB") },
+            placeholder = { Text("Enlace a IMDB") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+        //Column {
+            Text(
+                "Genero",
+                modifier = Modifier.padding(16.dp)
+                    .clickable { expandedgenero = true },
+                textAlign = TextAlign.Start,
+
+                )
+            DropdownMenu(
+                expanded = expandedgenero,
+                onDismissRequest = { expandedgenero = false }
+            )
+            {
+                generoList.forEach { genero ->
+                    DropdownMenuItem(
+                        text = { Text(genero) },
+                        onClick = {
+                            selectedGenero=genero
+                            expandedgenero = false
+                        }
+                    )
+                }
+            }
+            Text(
+                "Formato",
+                modifier = Modifier.padding(16.dp)
+                    .clickable { expandedformato = true },
+                textAlign = TextAlign.Start,
+
+                )
+            DropdownMenu(
+                expanded = expandedformato,
+                onDismissRequest = { expandedformato = false }
+            )
+            {
+                formatoList.forEach { formato ->
+                    DropdownMenuItem(
+                        text = { Text(formato) },
+                        onClick = {
+                            selectedFormato=formato
+                            expandedformato = false
+                        }
+                    )
+                }
+            }
+        TextField(
+            value = comentarios,
+            onValueChange = { newText -> comentarios = newText },
+            label = { Text("Comentarios") },
+            placeholder = { Text("Comentarios") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+     //}
+
     }
 
 }
 
 
 
-//@Composable
-//fun FilmEditScreen (navController: NavHostController)
-//{
-//    Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)}, content = { padding ->
-//        Column(
-//            modifier = Modifier
-//                .fillMaxHeight()
-//                .fillMaxWidth(),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        )
-//        {
-//            Text(
-//                text = "Editando película"
-//            )
-//            Spacer(modifier = Modifier.height(8.dp))
-//            Button(onClick = {
-//                navController.previousBackStackEntry?.savedStateHandle?.set(
-//                    "key_result",
-//                    "RESULT_OK"
-//                )
-//                navController.popBackStack()
-//            })
-//            {
-//                Text(text = stringResource(R.string.guardar))
-//            }
-//            Spacer(modifier = Modifier.height(8.dp))
-//            Button(onClick = {
-//                navController.previousBackStackEntry?.savedStateHandle?.set(
-//                    "key_result",
-//                    "RESULT_CANCELED"
-//                )
-//                navController.popBackStack()
-//            })
-//            {
-//                Text(text = stringResource(R.string.cancelar))
-//            }
-//        }
-//    }
-//    )
-//
-//}
+@Composable
+fun FilmEditScreen (navController: NavHostController)
+{
+    Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
+        content = {paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            Text(
+                text = "Editando película"
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = {
+                navController.previousBackStackEntry?.savedStateHandle?.set(
+                    "key_result",
+                    "RESULT_OK"
+                )
+                navController.popBackStack()
+            })
+            {
+                Text(text = stringResource(R.string.guardar))
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Button(onClick = {
+                navController.previousBackStackEntry?.savedStateHandle?.set(
+                    "key_result",
+                    "RESULT_CANCELED"
+                )
+                navController.popBackStack()
+            })
+            {
+                Text(text = stringResource(R.string.cancelar))
+            }
+        }
+    }
+    )
+
+}
