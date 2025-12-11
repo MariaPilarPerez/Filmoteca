@@ -5,8 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.content.MediaType.Companion.Image
 import androidx.compose.foundation.gestures.snapping.SnapPosition
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -48,9 +50,9 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 
 
-@Preview(showBackground = true)
+
 @Composable
-fun EditarPantalla()
+fun FilmEditScreen(navController: NavHostController, titulo: String)
 {
     var titulo by remember { mutableStateOf("") }
     var director by remember {mutableStateOf("")}
@@ -68,150 +70,185 @@ fun EditarPantalla()
     var selectedGenero = generoList[genero]
     var selectedFormato = formatoList[formato]
 
-    Column(
-        modifier=Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .padding(top=100.dp),
-
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-
-    )
-    {
-        Row()
-        {
-            Image(
-                painter = painterResource(R.drawable.palomitas), contentDescription = null,
-                Modifier.size(100.dp)
-                    .weight(1f)
-            )
-            Button(
-                onClick = {},
-                modifier = Modifier.weight(1f)
-                    .padding(top = 16.dp),
-            )
-            {
-                Text(text = "Capturar fotografía")
-            }
-            Spacer(
+    Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
+        content = { paddingValues ->
+            Column(
                 modifier = Modifier
-                    .padding(4.dp)
-            )
-            Button(
-                onClick = {},
-                modifier = Modifier.weight(1f)
-                    .padding(top = 16.dp)
-                    .padding(end = 4.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth()
+                    .padding(top = 100.dp),
+
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+
             )
             {
-                Text(text = "Seleccionar imagen")
+                Row()
+                {
+                    Image(
+                        painter = painterResource(R.drawable.palomitas), contentDescription = null,
+                        Modifier.size(100.dp)
+                            .weight(1f)
+                    )
+                    Button(
+                        onClick = {},
+                        modifier = Modifier.weight(1f)
+                            .padding(top = 16.dp),
+                    )
+                    {
+                        Text(text = "Capturar fotografía")
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .padding(4.dp)
+                    )
+                    Button(
+                        onClick = {},
+                        modifier = Modifier.weight(1f)
+                            .padding(top = 16.dp)
+                            .padding(end = 4.dp)
+                    )
+                    {
+                        Text(text = "Seleccionar imagen")
+                    }
+                }
+                TextField(
+                    value = titulo,
+                    onValueChange = { newText -> titulo = newText },
+                    label = { Text("Titulo") },
+                    placeholder = { Text("Escribe el título") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+                TextField(
+                    value = director,
+                    onValueChange = { newText -> director = newText },
+                    label = { Text("Director") },
+                    placeholder = { Text("Escribe el Director") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+                var anyo: String = estreno.toString()
+                TextField(
+                    value = anyo,
+                    onValueChange = { newText -> anyo = newText },
+                    label = { Text("Año de estreno") },
+                    placeholder = { Text("Escribe el año de estreno") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+                TextField(
+                    value = url,
+                    onValueChange = { newText -> url = newText },
+                    label = { Text("Enlace a IMDB") },
+                    placeholder = { Text("Escribe el enlace a IMDB") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+                //Column {
+                Text(
+                    "Genero",
+                    modifier = Modifier.padding(16.dp)
+                        .clickable { expandedgenero = true },
+                    //textAlign = TextAlign.Start,
+
+                    )
+                DropdownMenu(
+                    expanded = expandedgenero,
+                    onDismissRequest = { expandedgenero = false }
+                )
+                {
+                    generoList.forEach { genero ->
+                        DropdownMenuItem(
+                            onClick = {
+                                selectedGenero = genero
+                                expandedgenero = false
+                            },
+                            text = { Text(genero) },
+                        )
+
+                    }
+                }
+                Text(
+                    "Formato",
+                    modifier = Modifier.padding(16.dp)
+                        .clickable { expandedformato = true },
+                    //textAlign = TextAlign.Start,
+
+                    )
+                DropdownMenu(
+                    expanded = expandedformato,
+                    onDismissRequest = { expandedformato = false }
+                )
+                {
+                    formatoList.forEach { formato ->
+                        DropdownMenuItem(
+                            onClick = {
+                                selectedFormato = formato
+                                expandedformato = false
+                            },
+                            text = { Text(formato) },
+                        )
+
+                    }
+                }
+                TextField(
+                    value = comentarios,
+                    onValueChange = { newText -> comentarios = newText },
+                    label = { Text("Comentarios") },
+                    placeholder = { Text("Pon aqui tus Comentarios") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                )
+                Row (Modifier.padding(start = 8.dp).padding(end=8.dp)){
+                    Button(onClick = {
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            "key_result",
+                            "RESULT_OK"
+                        )
+                        navController.popBackStack()
+                    }, Modifier.weight(1f))
+                    {
+                        Text(text = stringResource(R.string.guardar))
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .padding(4.dp)
+                    )
+                    Button(onClick = {
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            "key_result",
+                            "RESULT_CANCELED"
+                        )
+                        navController.popBackStack()
+                    }, Modifier.weight(1f))
+                    {
+                        Text(text = stringResource(R.string.cancelar))
+                    }
+
+                }
             }
+
         }
-        TextField(
-            value = titulo,
-            onValueChange = { newText -> titulo = newText },
-            label = { Text("Titulo") },
-            placeholder = { Text("Titulo") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-        )
-        TextField(
-            value = director,
-            onValueChange = { newText -> director = newText },
-            label = { Text("Director") },
-            placeholder = { Text("Director") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-        )
-        var anyo: String = estreno.toString()
-        TextField(
-            value = anyo,
-            onValueChange = { newText -> anyo = newText },
-            label = { Text("Año de estreno") },
-            placeholder = { Text("Año de estreno") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-        )
-        TextField(
-            value = url,
-            onValueChange = { newText -> url = newText },
-            label = { Text("Enlace a IMDB") },
-            placeholder = { Text("Enlace a IMDB") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-        )
-        //Column {
-            Text(
-                "Genero",
-                modifier = Modifier.padding(16.dp)
-                    .clickable { expandedgenero = true },
-                textAlign = TextAlign.Start,
-
-                )
-            DropdownMenu(
-                expanded = expandedgenero,
-                onDismissRequest = { expandedgenero = false }
-            )
-            {
-                generoList.forEach { genero ->
-                    DropdownMenuItem(
-                        text = { Text(genero) },
-                        onClick = {
-                            selectedGenero=genero
-                            expandedgenero = false
-                        }
-                    )
-                }
-            }
-            Text(
-                "Formato",
-                modifier = Modifier.padding(16.dp)
-                    .clickable { expandedformato = true },
-                textAlign = TextAlign.Start,
-
-                )
-            DropdownMenu(
-                expanded = expandedformato,
-                onDismissRequest = { expandedformato = false }
-            )
-            {
-                formatoList.forEach { formato ->
-                    DropdownMenuItem(
-                        text = { Text(formato) },
-                        onClick = {
-                            selectedFormato=formato
-                            expandedformato = false
-                        }
-                    )
-                }
-            }
-        TextField(
-            value = comentarios,
-            onValueChange = { newText -> comentarios = newText },
-            label = { Text("Comentarios") },
-            placeholder = { Text("Comentarios") },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-        )
-     //}
-
-    }
-
+    )
 }
 
 
 
+
+
+
+
 @Composable
-fun FilmEditScreen (navController: NavHostController)
+fun oldFilmEditScreen (navController: NavHostController)
 {
     Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
-        content = {paddingValues ->
+        content = { paddingValues: PaddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxHeight()

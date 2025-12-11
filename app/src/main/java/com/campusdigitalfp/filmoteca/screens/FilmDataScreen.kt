@@ -121,7 +121,7 @@ fun FilmDataScreen(navController: NavHostController, titulo: String)
                     .padding(start= 8.dp)
                     .padding(end=4.dp))
                 { Text(text = "Volver") }
-                Button(onClick = {}, Modifier.weight(1f)
+                Button(onClick = {navController.navigate("editar/$titulo")}, Modifier.weight(1f)
                     .padding(start=4.dp).padding(end=8.dp))
                 { Text(text = "Editar") }
             }
