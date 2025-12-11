@@ -15,4 +15,18 @@
     <string name="guardar">Guardar</string>
     <string name="cancelar">Cancelar</string>
     <string name="datos_de_la_pelicula">Datos de la Pelicula</string>
+    <string name="capturar_fotograf_a">Capturar fotografía</string>
+    <string name="seleccionar_imagen">Seleccionar imagen</string>
+    <string name="titulo">Titulo</string>
+    <string name="escribe_el_t_tulo">Escribe el título</string>
+    <string name="director">Director</string>
+    <string name="escribe_el_director">Escribe el Director</string>
+    <string name="a_o_de_estreno">Año de estreno</string>
+    <string name="escribe_el_a_o_de_estreno">Escribe el año de estreno</string>
+    <string name="enlace_a_imdb">Enlace a IMDB</string>
+    <string name="escribe_el_enlace_a_imdb">Escribe el enlace a IMDB</string>
+    <string name="genero">Genero</string>
+    <string name="formato">Formato</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="pon_aqui_tus_comentarios">Pon aqui tus Comentarios</string>
 </resources>

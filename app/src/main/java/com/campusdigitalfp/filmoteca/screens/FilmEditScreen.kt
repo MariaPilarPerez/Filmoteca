@@ -87,16 +87,18 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                 {
                     Image(
                         painter = painterResource(R.drawable.palomitas), contentDescription = null,
-                        Modifier.size(100.dp)
+                        Modifier
+                            .size(100.dp)
                             .weight(1f)
                     )
                     Button(
                         onClick = {},
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
                             .padding(top = 16.dp),
                     )
                     {
-                        Text(text = "Capturar fotografía")
+                        Text(text = stringResource(R.string.capturar_fotograf_a))
                     }
                     Spacer(
                         modifier = Modifier
@@ -104,19 +106,20 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                     )
                     Button(
                         onClick = {},
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
                             .padding(top = 16.dp)
                             .padding(end = 4.dp)
                     )
                     {
-                        Text(text = "Seleccionar imagen")
+                        Text(text = stringResource(R.string.seleccionar_imagen))
                     }
                 }
                 TextField(
                     value = titulo,
                     onValueChange = { newText -> titulo = newText },
-                    label = { Text("Titulo") },
-                    placeholder = { Text("Escribe el título") },
+                    label = { Text(stringResource(R.string.titulo)) },
+                    placeholder = { Text(stringResource(R.string.escribe_el_t_tulo)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
@@ -124,8 +127,8 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                 TextField(
                     value = director,
                     onValueChange = { newText -> director = newText },
-                    label = { Text("Director") },
-                    placeholder = { Text("Escribe el Director") },
+                    label = { Text(stringResource(R.string.director)) },
+                    placeholder = { Text(stringResource(R.string.escribe_el_director)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
@@ -134,8 +137,8 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                 TextField(
                     value = anyo,
                     onValueChange = { newText -> anyo = newText },
-                    label = { Text("Año de estreno") },
-                    placeholder = { Text("Escribe el año de estreno") },
+                    label = { Text(stringResource(R.string.a_o_de_estreno)) },
+                    placeholder = { Text(stringResource(R.string.escribe_el_a_o_de_estreno)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
@@ -143,16 +146,17 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                 TextField(
                     value = url,
                     onValueChange = { newText -> url = newText },
-                    label = { Text("Enlace a IMDB") },
-                    placeholder = { Text("Escribe el enlace a IMDB") },
+                    label = { Text(stringResource(R.string.enlace_a_imdb)) },
+                    placeholder = { Text(stringResource(R.string.escribe_el_enlace_a_imdb)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                 )
                 //Column {
                 Text(
-                    "Genero",
-                    modifier = Modifier.padding(16.dp)
+                    stringResource(R.string.genero),
+                    modifier = Modifier
+                        .padding(16.dp)
                         .clickable { expandedgenero = true },
                     //textAlign = TextAlign.Start,
 
@@ -174,8 +178,9 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                     }
                 }
                 Text(
-                    "Formato",
-                    modifier = Modifier.padding(16.dp)
+                    stringResource(R.string.formato),
+                    modifier = Modifier
+                        .padding(16.dp)
                         .clickable { expandedformato = true },
                     //textAlign = TextAlign.Start,
 
@@ -199,13 +204,15 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                 TextField(
                     value = comentarios,
                     onValueChange = { newText -> comentarios = newText },
-                    label = { Text("Comentarios") },
-                    placeholder = { Text("Pon aqui tus Comentarios") },
+                    label = { Text(stringResource(R.string.comentarios)) },
+                    placeholder = { Text(stringResource(R.string.pon_aqui_tus_comentarios)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                 )
-                Row (Modifier.padding(start = 8.dp).padding(end=8.dp)){
+                Row (Modifier
+                    .padding(start = 8.dp)
+                    .padding(end = 8.dp)){
                     Button(onClick = {
                         navController.previousBackStackEntry?.savedStateHandle?.set(
                             "key_result",
