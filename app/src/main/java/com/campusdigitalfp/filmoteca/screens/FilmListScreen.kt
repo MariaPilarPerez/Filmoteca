@@ -60,6 +60,7 @@ data class Film(
     var imdbUrl: String? = null,
     var comments: String? = null
 ) {
+
     override fun toString(): String {
         // Al convertir a cadena mostramos su título
         return title ?: "<Sin título>"

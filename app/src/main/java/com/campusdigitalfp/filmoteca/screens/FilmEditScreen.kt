@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.content.MediaType.Companion.Image
 import androidx.compose.foundation.gestures.snapping.SnapPosition
+import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -71,7 +72,7 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
     var selectedFormato = formatoList[formato]
 
     Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
-        content = { paddingValues ->
+        content = { padding ->
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -158,7 +159,6 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                     modifier = Modifier
                         .padding(16.dp)
                         .clickable { expandedgenero = true },
-                    //textAlign = TextAlign.Start,
 
                     )
                 DropdownMenu(
@@ -255,7 +255,7 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
 fun oldFilmEditScreen (navController: NavHostController)
 {
     Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
-        content = { paddingValues: PaddingValues ->
+        content = { padding ->
         Column(
             modifier = Modifier
                 .fillMaxHeight()

@@ -74,7 +74,7 @@ fun AboutScreen(navController: NavHostController) {
             )
             Spacer(modifier=Modifier.height(16.dp))
             Image(
-                painter = painterResource(R.drawable.perfil),
+                painter = painterResource(R.drawable.perfilchica),
                 contentDescription = "Foto de perfil"
             )
             Spacer(modifier=Modifier.height(8.dp))

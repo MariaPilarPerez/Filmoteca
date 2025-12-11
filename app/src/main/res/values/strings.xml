@@ -29,4 +29,5 @@
     <string name="formato">Formato</string>
     <string name="comentarios">Comentarios</string>
     <string name="pon_aqui_tus_comentarios">Pon aqui tus Comentarios</string>
+    <string name="sin_t_tulo"><![CDATA[<Sin título>]]></string>
 </resources>
