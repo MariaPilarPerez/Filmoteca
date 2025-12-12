@@ -2,6 +2,7 @@ package com.campusdigitalfp.filmoteca.screens
 
 import android.content.Context
 import android.content.Intent
+import android.content.LocusId
 import android.media.Image
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -38,91 +39,116 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
+import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
+
+
 
 //mostrar los datos de una pelicula
 // una columna con un texto y tres botones
 
 
 @Composable
-fun FilmDataScreen(navController: NavHostController, titulo: String)
+fun FilmDataScreen(navController: NavHostController, id: Int )
 
 {
-    val imagen: Painter = painterResource(R.drawable.interstellar)
-    val nombrefilm: String = "Interstellar"
-    val director: String ="Christopher Nolan"
-    val estreno: Int = 2014
-    val genero: String ="Ciencia Ficción"
-    val formato: String ="DVD"
-    val enlaceIMDB: String ="https://m.imdb.com/es-es/title/tt0816692/?ref_=ext_shr_lnk"
+//    val imagen: Painter = painterResource(R.drawable.interstellar)
+//    val nombrefilm: String = "Interstellar"
+//    val director: String ="Christopher Nolan"
+//    val estreno: Int = 2014
+//    val genero: String ="Ciencia Ficción"
+//    val formato: String ="DVD"
+//    val enlaceIMDB: String ="https://m.imdb.com/es-es/title/tt0816692/?ref_=ext_shr_lnk"
     val context=LocalContext.current
+
+    var film: Film= films[id]
+
 
     Scaffold(topBar = {BarraSuperiorComun(navController,true)}, content = { padding ->
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(top=100.dp),
+                .padding(top = 100.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
             Row {
                 Spacer(modifier = Modifier.height(16.dp))
-                Image( painter = imagen
-                    , contentDescription = null,
+                film.imageResId?.let{
+                Image( painter=painterResource(it),
+                    contentDescription = null,
                     Modifier.size(200.dp)
-                )
+                )}
                 Column() {
-                    Text(
-                        text = nombrefilm,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
-                    )
+                    film.title?.let {
+                        Text(
+                            text = it,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp
+                        )
+                    }
                     Text(
                         text = "Director:",
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
-                    Text(
-                        text = director,
-                        fontSize = 16.sp
-                    )
+                    film.director?.let {
+                        Text(
+                            text = it,
+                            fontSize = 16.sp
+                        )
+                    }
                     Text(
                         text = "Año de estreno:",
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
                     Text(
-                        text = estreno.toString(),
+                        text = films[id].year.toString(),
                         fontSize = 16.sp
                     )
+                    val generoList = context.resources.getStringArray(R.array.genero_list)
                     Text(
-                        text = genero + ", " + formato,
+                        text = generoList[films[id].genre],
+                        fontSize = 16.sp
+                    )
+                    val formatoList = context.resources.getStringArray(R.array.formato_list)
+                    Text(
+                        text = formatoList[films[id].format],
                         fontSize = 16.sp
                     )
                 }
             }
             Row {
-                Button(onClick = {VerEnIMDB(enlaceIMDB, context)},
-                    Modifier.weight(1f)
+                Button(onClick = {
+                    film.imdbUrl?.let {
+                         VerEnIMDB(films[id].imdbUrl!!, context)}},
+                    Modifier
+                        .weight(1f)
                         .padding(8.dp))
-                {
-                    Text(
-                        text = "Ver en IMDB"
-                    )
+                    {
+                        Text(
+                            text = "Ver en IMDB"
+                        )
+
                 }
             }
             Row {
                 Button(onClick = {navController.popBackStack()},
-                    Modifier.weight(1f)
-                    .padding(start= 8.dp)
-                    .padding(end=4.dp))
+                    Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp)
+                        .padding(end = 4.dp))
                 { Text(text = "Volver") }
-                Button(onClick = {navController.navigate("editar/$titulo")}, Modifier.weight(1f)
-                    .padding(start=4.dp).padding(end=8.dp))
+                Button(onClick = {navController.navigate("editar/{id}")}, Modifier
+                    .weight(1f)
+                    .padding(start = 4.dp)
+                    .padding(end = 8.dp))
                 { Text(text = "Editar") }
             }
         }

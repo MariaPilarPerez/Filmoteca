@@ -45,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
@@ -53,23 +54,22 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 
 @Composable
-fun FilmEditScreen(navController: NavHostController, titulo: String)
+fun FilmEditScreen(navController: NavHostController, id: Int)
 {
-    var titulo by remember { mutableStateOf("") }
-    var director by remember {mutableStateOf("")}
-    var estreno by remember { mutableIntStateOf(1990) }
-    var url by remember {mutableStateOf("")}
-    var imagen by remember {mutableIntStateOf(0)}
-    var comentarios by remember {mutableStateOf("")}
+    var titulo by remember { mutableStateOf(films[id].title) }
+    var director by remember {mutableStateOf(films[id].director)}
+    var estreno by remember { mutableStateOf(films[id].year.toString()) }
+    var url by remember {mutableStateOf(films[id].imdbUrl)}
+    var imagen by remember {mutableIntStateOf(films[id].imageResId)}
+    var comentarios by remember {mutableStateOf(films[id].comments)}
     var expandedgenero by remember{mutableStateOf(false)}
     var expandedformato by remember { mutableStateOf(false) }
     val context=LocalContext.current
     val generoList=context.resources.getStringArray(R.array.genero_list).toList()
     val formatoList=context.resources.getStringArray(R.array.formato_list).toList()
-    var genero by remember {mutableIntStateOf(0)}
-    var formato by remember {mutableIntStateOf(1)}
-    var selectedGenero = generoList[genero]
-    var selectedFormato = formatoList[formato]
+    var genero by remember {mutableIntStateOf(films[id].genre)}
+    var formato by remember {mutableIntStateOf(films[id].format)}
+
 
     Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
         content = { padding ->
@@ -84,7 +84,7 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
 
             )
             {
-                Row()
+                Row(modifier=Modifier,Arrangement.Start)
                 {
                     Image(
                         painter = painterResource(R.drawable.palomitas), contentDescription = null,
@@ -116,24 +116,29 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                         Text(text = stringResource(R.string.seleccionar_imagen))
                     }
                 }
-                TextField(
-                    value = titulo,
-                    onValueChange = { newText -> titulo = newText },
-                    label = { Text(stringResource(R.string.titulo)) },
-                    placeholder = { Text(stringResource(R.string.escribe_el_t_tulo)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                )
-                TextField(
-                    value = director,
-                    onValueChange = { newText -> director = newText },
-                    label = { Text(stringResource(R.string.director)) },
-                    placeholder = { Text(stringResource(R.string.escribe_el_director)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                )
+                titulo?.let {
+                    TextField(
+                        value = it,
+                        onValueChange = { newText -> titulo = newText },
+                        label = { Text(stringResource(R.string.titulo)) },
+                        placeholder = { Text(stringResource(R.string.escribe_el_t_tulo)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                    )
+                }
+
+                director?.let {
+                    TextField(
+                        value = it,
+                        onValueChange = { newText -> director = newText },
+                        label = { Text(stringResource(R.string.director)) },
+                        placeholder = { Text(stringResource(R.string.escribe_el_director)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                    )
+                }
                 var anyo: String = estreno.toString()
                 TextField(
                     value = anyo,
@@ -144,15 +149,17 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                 )
-                TextField(
-                    value = url,
-                    onValueChange = { newText -> url = newText },
-                    label = { Text(stringResource(R.string.enlace_a_imdb)) },
-                    placeholder = { Text(stringResource(R.string.escribe_el_enlace_a_imdb)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                )
+                url?.let {
+                    TextField(
+                        value = it,
+                        onValueChange = { newText -> url = newText },
+                        label = { Text(stringResource(R.string.enlace_a_imdb)) },
+                        placeholder = { Text(stringResource(R.string.escribe_el_enlace_a_imdb)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                    )
+                }
                 //Column {
                 Text(
                     stringResource(R.string.genero),
@@ -169,7 +176,6 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                     generoList.forEach { genero ->
                         DropdownMenuItem(
                             onClick = {
-                                selectedGenero = genero
                                 expandedgenero = false
                             },
                             text = { Text(genero) },
@@ -193,7 +199,6 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
                     formatoList.forEach { formato ->
                         DropdownMenuItem(
                             onClick = {
-                                selectedFormato = formato
                                 expandedformato = false
                             },
                             text = { Text(formato) },
@@ -201,15 +206,17 @@ fun FilmEditScreen(navController: NavHostController, titulo: String)
 
                     }
                 }
-                TextField(
-                    value = comentarios,
-                    onValueChange = { newText -> comentarios = newText },
-                    label = { Text(stringResource(R.string.comentarios)) },
-                    placeholder = { Text(stringResource(R.string.pon_aqui_tus_comentarios)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                )
+                comentarios?.let {
+                    TextField(
+                        value = it,
+                        onValueChange = { newText -> comentarios = newText },
+                        label = { Text(stringResource(R.string.comentarios)) },
+                        placeholder = { Text(stringResource(R.string.pon_aqui_tus_comentarios)) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                    )
+                }
                 Row (Modifier
                     .padding(start = 8.dp)
                     .padding(end = 8.dp)){
