@@ -1,9 +1,11 @@
 package com.campusdigitalfp.filmoteca.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.campusdigitalfp.filmoteca.AboutScreen
 import com.campusdigitalfp.filmoteca.screens.Film
 import com.campusdigitalfp.filmoteca.screens.FilmDataScreen
@@ -21,17 +23,20 @@ fun Navigation ()
         composable ("lista"){
             FilmListScreen(navController = navController)}
         //composable ("editar"){ FilmEditScreen(navController) }
-        composable("editar/{id}"){ backStackEntry ->
-            val id=backStackEntry.arguments?.getInt("id")
-            if (id!=null)
-               FilmEditScreen(navController, id)
+        composable("editar/{idfilm}"){ backStackEntry ->
+            val idfilm=backStackEntry.arguments?.getString("idfilm")?.toIntOrNull()
+            if (idfilm!=null)
+               FilmEditScreen(navController, idfilm)
         }
-        composable(route = "datosfilm/{id}") { backStackEntry ->
-            val id = backStackEntry.arguments?.getInt("id")
-            if (id != null) {
-                FilmDataScreen(navController, id)
+        composable(route = "datosfilm/{idfilm}")
+               { backStackEntry ->
+            val idfilm = backStackEntry.arguments?.getString("idfilm")?.toIntOrNull()
+            if (idfilm != null) {
+                FilmDataScreen(navController, idfilm = idfilm)
             }
         }
+
+
     }
 }
 

@@ -52,7 +52,7 @@ import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 
 
 @Composable
-fun FilmDataScreen(navController: NavHostController, id: Int )
+fun FilmDataScreen(navController: NavHostController, idfilm: Int )
 
 {
 //    val imagen: Painter = painterResource(R.drawable.interstellar)
@@ -64,8 +64,7 @@ fun FilmDataScreen(navController: NavHostController, id: Int )
 //    val enlaceIMDB: String ="https://m.imdb.com/es-es/title/tt0816692/?ref_=ext_shr_lnk"
     val context=LocalContext.current
 
-    var film: Film= films[id]
-
+    val film = films.find {it.id==idfilm}
 
     Scaffold(topBar = {BarraSuperiorComun(navController,true)}, content = { padding ->
         Column(
@@ -79,13 +78,13 @@ fun FilmDataScreen(navController: NavHostController, id: Int )
         {
             Row {
                 Spacer(modifier = Modifier.height(16.dp))
-                film.imageResId?.let{
+                film?.imageResId?.let{
                 Image( painter=painterResource(it),
                     contentDescription = null,
                     Modifier.size(200.dp)
                 )}
                 Column() {
-                    film.title?.let {
+                    film?.title?.let {
                         Text(
                             text = it,
                             fontWeight = FontWeight.Bold,
@@ -97,7 +96,7 @@ fun FilmDataScreen(navController: NavHostController, id: Int )
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
-                    film.director?.let {
+                    film?.director?.let {
                         Text(
                             text = it,
                             fontSize = 16.sp
@@ -109,25 +108,25 @@ fun FilmDataScreen(navController: NavHostController, id: Int )
                         fontSize = 16.sp
                     )
                     Text(
-                        text = films[id].year.toString(),
+                        text = films[idfilm].year.toString(),
                         fontSize = 16.sp
                     )
                     val generoList = context.resources.getStringArray(R.array.genero_list)
                     Text(
-                        text = generoList[films[id].genre],
+                        text = generoList[films[idfilm].genre],
                         fontSize = 16.sp
                     )
                     val formatoList = context.resources.getStringArray(R.array.formato_list)
                     Text(
-                        text = formatoList[films[id].format],
+                        text = formatoList[films[idfilm].format],
                         fontSize = 16.sp
                     )
                 }
             }
             Row {
                 Button(onClick = {
-                    film.imdbUrl?.let {
-                         VerEnIMDB(films[id].imdbUrl!!, context)}},
+                    film?.imdbUrl?.let {
+                         VerEnIMDB(films[idfilm].imdbUrl!!, context)}},
                     Modifier
                         .weight(1f)
                         .padding(8.dp))

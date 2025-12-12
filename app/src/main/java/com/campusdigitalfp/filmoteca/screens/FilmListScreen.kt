@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
@@ -59,7 +60,7 @@ data class Film(
 fun FilmListScreen(
     navController: NavHostController,
 
-) {
+    ) {
     Scaffold(topBar = { BarraSuperiorComun(navController, false) }, content = { padding ->
 
 
@@ -81,12 +82,8 @@ fun FilmListScreen(
                 { film ->
                     VistaFilm(film, onClick = {
                         navController.navigate("datosfilm/${film.id}")
-                    }, isSelected = true, onLongClick = {})
-
-
+                    }, isSelected = false, onLongClick = {})
                 }
-
-
             }
         }
     }
