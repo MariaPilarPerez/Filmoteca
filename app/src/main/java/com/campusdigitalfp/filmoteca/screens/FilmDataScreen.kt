@@ -53,10 +53,7 @@ import kotlin.text.toIntOrNull
 fun FilmDataScreen(navController: NavHostController, film: Film )
 
 {
-
     val context=LocalContext.current
-
-
 
     Scaffold(topBar = {BarraSuperiorComun(navController,true)}, content = { padding ->
         Column(
@@ -85,7 +82,7 @@ fun FilmDataScreen(navController: NavHostController, film: Film )
                         )
                     }
                     Text(
-                        text = "Director:",
+                        text = stringResource(R.string.director),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
@@ -96,7 +93,7 @@ fun FilmDataScreen(navController: NavHostController, film: Film )
                         )
                     }
                     Text(
-                        text = "Año de estreno:",
+                        text = stringResource(R.string.a_o_de_estreno),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
@@ -125,14 +122,14 @@ fun FilmDataScreen(navController: NavHostController, film: Film )
                         .padding(8.dp))
                     {
                         Text(
-                            text = "Ver en IMDB"
+                            text = stringResource(R.string.ver_en_imdb)
                         )
 
                 }
             }
             Row(modifier=Modifier
-                .padding(start=16.dp)
-                .padding(bottom=8.dp),
+                .padding(start = 16.dp)
+                .padding(bottom = 8.dp),
                 horizontalArrangement = Arrangement.Start
             )
             {
@@ -151,12 +148,12 @@ fun FilmDataScreen(navController: NavHostController, film: Film )
                         .weight(1f)
                         .padding(start = 8.dp)
                         .padding(end = 4.dp))
-                { Text(text = "Volver") }
+                { Text(text = stringResource(R.string.volver)) }
                 Button(onClick = {navController.navigate("editar/${film.id}")}, Modifier
                     .weight(1f)
                     .padding(start = 4.dp)
                     .padding(end = 8.dp))
-                { Text(text = "Editar") }
+                { Text(text = stringResource(R.string.editar_pelicula)) }
             }
         }
     }

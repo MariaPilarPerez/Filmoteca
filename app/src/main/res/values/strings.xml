@@ -29,5 +29,9 @@
     <string name="formato">Formato</string>
     <string name="comentarios">Comentarios</string>
     <string name="pon_aqui_tus_comentarios">Pon aqui tus Comentarios</string>
-    <string name="sin_t_tulo"><![CDATA[<Sin título>]]></string>
+    <string name="sin_t_tulo">Sin titulo</string>
+    <string name="nuevo">Nuevo</string>
+    <string name="menu_de_opciones">Menu de opciones</string>
+    <string name="filmoteca">FILMOTECA</string>
+    <string name="ver_en_imdb">Ver en IMDB</string>
 </resources>

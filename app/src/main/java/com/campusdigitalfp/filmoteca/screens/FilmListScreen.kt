@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
+import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
 
 // una columna con tres botones
@@ -140,4 +141,17 @@ fun VistaFilm(film: Film, onClick:() -> Unit, onLongClick: () -> Unit, isSelecte
 
 
 }
-
+fun NuevoFilm()
+{
+    val nuevo = Film(
+         id=films.size,
+        imageResId=R.drawable.palomitas,
+        title="Pelicula por defecto",
+        director= "Director desconocido",
+        year = 0,
+        genre = 0,
+        format = 0,
+        imdbUrl="",
+        comments ="")
+    films.add(nuevo)
+}

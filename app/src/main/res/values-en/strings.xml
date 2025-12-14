@@ -30,5 +30,9 @@
     <string name="formato">Format</string>
     <string name="comentarios">Comments</string>
     <string name="pon_aqui_tus_comentarios">Put your comments here</string>
-    <string name="sin_t_tulo"><![CDATA[<Sin título>]]></string>
+    <string name="sin_t_tulo">Without title</string>
+    <string name="nuevo">New</string>
+    <string name="menu_de_opciones">Options menu</string>
+    <string name="filmoteca">FILM LIBRARY</string>
+    <string name="ver_en_imdb">See in IMDB</string>
 </resources>
