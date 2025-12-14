@@ -34,14 +34,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
 import com.campusdigitalfp.filmoteca.navigation.Navigation
+import com.campusdigitalfp.filmoteca.screens.FilmDataScreen
 import com.campusdigitalfp.filmoteca.screens.FilmListScreen
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FilmDataSource.loadData(this)
         enableEdgeToEdge()
         setContent {
             FilmotecaTheme {

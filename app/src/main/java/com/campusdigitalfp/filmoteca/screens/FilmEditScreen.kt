@@ -45,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
@@ -54,25 +55,26 @@ import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 
 @Composable
-fun FilmEditScreen(navController: NavHostController, id: Int)
-{
-    var titulo by remember { mutableStateOf(films[id].title) }
-    var director by remember {mutableStateOf(films[id].director)}
-    var estreno by remember { mutableStateOf(films[id].year.toString()) }
-    var url by remember {mutableStateOf(films[id].imdbUrl)}
-    var imagen by remember {mutableIntStateOf(films[id].imageResId)}
-    var comentarios by remember {mutableStateOf(films[id].comments)}
-    var expandedgenero by remember{mutableStateOf(false)}
-    var expandedformato by remember { mutableStateOf(false) }
-    val context=LocalContext.current
-    val generoList=context.resources.getStringArray(R.array.genero_list).toList()
-    val formatoList=context.resources.getStringArray(R.array.formato_list).toList()
-    var genero by remember {mutableIntStateOf(films[id].genre)}
-    var formato by remember {mutableIntStateOf(films[id].format)}
-
-
-    Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
+fun FilmEditScreen(navController: NavHostController, film: Film) {
+    Scaffold(
+        topBar = { BarraSuperiorComun(navController, true, c_edit = true) },
         content = { padding ->
+
+            var titulo by remember { mutableStateOf(film.title) }
+            var director by remember { mutableStateOf(film.director) }
+            var estreno by remember { mutableStateOf(film.year.toString()) }
+            var url by remember { mutableStateOf(film.imdbUrl) }
+            var imagen by remember { mutableIntStateOf(film.imageResId) }
+            var comentarios by remember { mutableStateOf(film.comments) }
+            var expandedgenero by remember { mutableStateOf(false) }
+            var expandedformato by remember { mutableStateOf(false) }
+            val context = LocalContext.current
+            val generoList = context.resources.getStringArray(R.array.genero_list).toList()
+            val formatoList = context.resources.getStringArray(R.array.formato_list).toList()
+            var genero by remember { mutableIntStateOf(film.genre) }
+            var formato by remember { mutableIntStateOf(film.format) }
+
+
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -84,10 +86,11 @@ fun FilmEditScreen(navController: NavHostController, id: Int)
 
             )
             {
-                Row(modifier=Modifier,Arrangement.Start)
+                Row(modifier = Modifier, Arrangement.Start)
                 {
                     Image(
-                        painter = painterResource(R.drawable.palomitas), contentDescription = null,
+                        painter = painterResource(R.drawable.palomitas),
+                        contentDescription = null,
                         Modifier
                             .size(100.dp)
                             .weight(1f)
@@ -139,110 +142,130 @@ fun FilmEditScreen(navController: NavHostController, id: Int)
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                     )
                 }
-                var anyo: String = estreno.toString()
-                TextField(
-                    value = anyo,
-                    onValueChange = { newText -> anyo = newText },
-                    label = { Text(stringResource(R.string.a_o_de_estreno)) },
-                    placeholder = { Text(stringResource(R.string.escribe_el_a_o_de_estreno)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                )
-                url?.let {
+                estreno.let {
                     TextField(
                         value = it,
-                        onValueChange = { newText -> url = newText },
-                        label = { Text(stringResource(R.string.enlace_a_imdb)) },
-                        placeholder = { Text(stringResource(R.string.escribe_el_enlace_a_imdb)) },
+                        onValueChange = { newText -> estreno = newText },
+                        label = { Text(stringResource(R.string.a_o_de_estreno)) },
+                        placeholder = { Text(stringResource(R.string.escribe_el_a_o_de_estreno)) },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                     )
-                }
-                //Column {
-                Text(
-                    stringResource(R.string.genero),
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clickable { expandedgenero = true },
-
-                    )
-                DropdownMenu(
-                    expanded = expandedgenero,
-                    onDismissRequest = { expandedgenero = false }
-                )
-                {
-                    generoList.forEach { genero ->
-                        DropdownMenuItem(
-                            onClick = {
-                                expandedgenero = false
-                            },
-                            text = { Text(genero) },
+                    url?.let {
+                        TextField(
+                            value = it,
+                            onValueChange = { newText -> url = newText },
+                            label = { Text(stringResource(R.string.enlace_a_imdb)) },
+                            placeholder = { Text(stringResource(R.string.escribe_el_enlace_a_imdb)) },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                         )
-
                     }
-                }
-                Text(
-                    stringResource(R.string.formato),
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .clickable { expandedformato = true },
-                    //textAlign = TextAlign.Start,
+                    Column {
+                        Text(
+                            text = generoList[genero],
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clickable { expandedgenero = true }
+                                .align(alignment = Alignment.Start)
+                        )
+                        DropdownMenu(
+                            expanded = expandedgenero,
+                            onDismissRequest = { expandedgenero = false }
+                        )
+                        {
+                            generoList.forEach { genero ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        expandedgenero = false
+                                    },
+                                    text = { Text(genero) },
+                                )
 
-                    )
-                DropdownMenu(
-                    expanded = expandedformato,
-                    onDismissRequest = { expandedformato = false }
-                )
-                {
-                    formatoList.forEach { formato ->
-                        DropdownMenuItem(
-                            onClick = {
-                                expandedformato = false
-                            },
-                            text = { Text(formato) },
+                            }
+                        }
+                        Text(
+                            text = formatoList[formato],
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clickable { expandedformato = true }
+                                .align(alignment = Alignment.Start)
                         )
 
-                    }
-                }
-                comentarios?.let {
-                    TextField(
-                        value = it,
-                        onValueChange = { newText -> comentarios = newText },
-                        label = { Text(stringResource(R.string.comentarios)) },
-                        placeholder = { Text(stringResource(R.string.pon_aqui_tus_comentarios)) },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                    )
-                }
-                Row (Modifier
-                    .padding(start = 8.dp)
-                    .padding(end = 8.dp)){
-                    Button(onClick = {
-                        navController.previousBackStackEntry?.savedStateHandle?.set(
-                            "key_result",
-                            "RESULT_OK"
+                        DropdownMenu(
+                            expanded = expandedformato,
+                            onDismissRequest = { expandedformato = false }
                         )
-                        navController.popBackStack()
-                    }, Modifier.weight(1f))
-                    {
-                        Text(text = stringResource(R.string.guardar))
-                    }
-                    Spacer(
-                        modifier = Modifier
-                            .padding(4.dp)
-                    )
-                    Button(onClick = {
-                        navController.previousBackStackEntry?.savedStateHandle?.set(
-                            "key_result",
-                            "RESULT_CANCELED"
-                        )
-                        navController.popBackStack()
-                    }, Modifier.weight(1f))
-                    {
-                        Text(text = stringResource(R.string.cancelar))
+                        {
+                            formatoList.forEach { formato ->
+                                DropdownMenuItem(
+                                    onClick = {
+                                        expandedformato = false
+                                    },
+                                    text = { Text(formato) },
+                                )
+
+                            }
+                        }
+                        comentarios?.let {
+                            TextField(
+                                value = it,
+                                onValueChange = { newText -> comentarios = newText },
+                                label = { Text(stringResource(R.string.comentarios)) },
+                                placeholder = { Text(stringResource(R.string.pon_aqui_tus_comentarios)) },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                            )
+                        }
+                        Row(
+                            Modifier
+                                .padding(start = 8.dp)
+                                .padding(end = 8.dp)
+                        ) {
+                            Button(onClick = {
+                                val updatedFilm = film.copy(
+                                        title = titulo,
+                                        director = director,
+                                        year = estreno.toIntOrNull() ?: film.year,
+                                        imdbUrl = url,
+                                        imageResId = imagen,
+                                        comments = comentarios,
+                                        genre = genero,
+                                        format = formato
+                                    )
+                               val index = FilmDataSource.films.indexOfFirst { it.id == film.id }
+                               if (index != -1) {
+                                  FilmDataSource.films[index] = updatedFilm
+                               }
+
+                                navController.previousBackStackEntry?.savedStateHandle?.set(
+                                    "key_result",
+                                    "RESULT_OK"
+                                )
+                                navController.popBackStack()
+                            }, Modifier.weight(1f))
+                            {
+                                Text(text = stringResource(R.string.guardar))
+                            }
+                            Spacer(
+                                modifier = Modifier
+                                    .padding(4.dp)
+                            )
+                            Button(onClick = {
+                                navController.previousBackStackEntry?.savedStateHandle?.set(
+                                    "key_result",
+                                    "RESULT_CANCELED"
+                                )
+                                navController.popBackStack()
+                            }, Modifier.weight(1f))
+                            {
+                                Text(text = stringResource(R.string.cancelar))
+                            }
+
+                        }
                     }
 
                 }
@@ -258,46 +281,14 @@ fun FilmEditScreen(navController: NavHostController, id: Int)
 
 
 
-@Composable
-fun oldFilmEditScreen (navController: NavHostController)
-{
-    Scaffold(topBar = { BarraSuperiorComun(navController, true, c_edit = true)},
-        content = { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        )
-        {
-            Text(
-                text = "Editando película"
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = {
-                navController.previousBackStackEntry?.savedStateHandle?.set(
-                    "key_result",
-                    "RESULT_OK"
-                )
-                navController.popBackStack()
-            })
-            {
-                Text(text = stringResource(R.string.guardar))
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Button(onClick = {
-                navController.previousBackStackEntry?.savedStateHandle?.set(
-                    "key_result",
-                    "RESULT_CANCELED"
-                )
-                navController.popBackStack()
-            })
-            {
-                Text(text = stringResource(R.string.cancelar))
-            }
-        }
-    }
-    )
 
-}
+
+
+
+
+
+
+
+
+
+

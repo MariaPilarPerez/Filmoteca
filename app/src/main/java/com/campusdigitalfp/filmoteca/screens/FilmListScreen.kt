@@ -1,5 +1,6 @@
 package com.campusdigitalfp.filmoteca.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
@@ -15,14 +16,20 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
 
@@ -58,40 +65,54 @@ data class Film(
 }
 @Composable
 fun FilmListScreen(
-    navController: NavHostController,
+    navController: NavHostController)
+   {
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+    val context = LocalContext.current
+    val isActionMode = remember{mutableStateOf(false)}
+    //val  pelis  = remember {  mutableStateListOf<Film>()}
 
-    ) {
-    Scaffold(topBar = { BarraSuperiorComun(navController, false) }, content = { padding ->
+       if(savedStateHandle!=null) {
+             val result: String? = savedStateHandle.get("key_result")
 
-
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(),
-            //verticalArrangement = Arrangement.Center,
-            //horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(top = 100.dp)
-                    .padding(start = 16.dp)
-            )
-            {
-                items(films)
-                { film ->
-                    VistaFilm(film, onClick = {
-                        navController.navigate("datosfilm/${film.id}")
-                    }, isSelected = false, onLongClick = {})
-                }
+        result.let {
+            LaunchedEffect(it) {
+                Toast.makeText(context,it,Toast.LENGTH_SHORT)
+            }
             }
         }
-    }
+
+
+
+        Scaffold(topBar = { BarraSuperiorComun(navController, false) },
+        content = { padding ->
+
+           Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .fillMaxWidth(),
+                    //verticalArrangement = Arrangement.Center,
+                    //horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(top = 100.dp)
+                            .padding(start = 16.dp)
+                    )
+                    {
+                        items(films)
+                        { film ->
+                            VistaFilm(film, onClick = {
+                                navController.navigate("datosfilm/${film.id}")
+                            }, isSelected = false, onLongClick = {})
+                        }
+                    }
+                }
+
+        }
     )
 }
-
-
-
 
 
 

@@ -23,6 +23,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,37 +36,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.savedstate.serialization.saved
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
-import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
-import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
-
-
-
-//mostrar los datos de una pelicula
-// una columna con un texto y tres botones
+import kotlin.text.toIntOrNull
 
 
 @Composable
-fun FilmDataScreen(navController: NavHostController, idfilm: Int )
+fun FilmDataScreen(navController: NavHostController, film: Film )
 
 {
-//    val imagen: Painter = painterResource(R.drawable.interstellar)
-//    val nombrefilm: String = "Interstellar"
-//    val director: String ="Christopher Nolan"
-//    val estreno: Int = 2014
-//    val genero: String ="Ciencia Ficción"
-//    val formato: String ="DVD"
-//    val enlaceIMDB: String ="https://m.imdb.com/es-es/title/tt0816692/?ref_=ext_shr_lnk"
+
     val context=LocalContext.current
 
-    val film = films.find {it.id==idfilm}
+
 
     Scaffold(topBar = {BarraSuperiorComun(navController,true)}, content = { padding ->
         Column(
@@ -73,18 +65,19 @@ fun FilmDataScreen(navController: NavHostController, idfilm: Int )
                 .fillMaxHeight()
                 .padding(top = 100.dp),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
+            //horizontalAlignment = Alignment.CenterHorizontally
+            // porque si no, no puedo alinear a la izquierda el texto del comentario.
         )
         {
             Row {
                 Spacer(modifier = Modifier.height(16.dp))
-                film?.imageResId?.let{
+                film.imageResId.let{
                 Image( painter=painterResource(it),
                     contentDescription = null,
                     Modifier.size(200.dp)
                 )}
                 Column() {
-                    film?.title?.let {
+                    film.title?.let {
                         Text(
                             text = it,
                             fontWeight = FontWeight.Bold,
@@ -96,7 +89,7 @@ fun FilmDataScreen(navController: NavHostController, idfilm: Int )
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
-                    film?.director?.let {
+                    film.director?.let {
                         Text(
                             text = it,
                             fontSize = 16.sp
@@ -108,25 +101,25 @@ fun FilmDataScreen(navController: NavHostController, idfilm: Int )
                         fontSize = 16.sp
                     )
                     Text(
-                        text = films[idfilm].year.toString(),
+                        text = film.year.toString(),
                         fontSize = 16.sp
                     )
                     val generoList = context.resources.getStringArray(R.array.genero_list)
                     Text(
-                        text = generoList[films[idfilm].genre],
+                        text = generoList[film.genre],
                         fontSize = 16.sp
                     )
                     val formatoList = context.resources.getStringArray(R.array.formato_list)
                     Text(
-                        text = formatoList[films[idfilm].format],
+                        text = formatoList[film.format],
                         fontSize = 16.sp
                     )
                 }
             }
             Row {
                 Button(onClick = {
-                    film?.imdbUrl?.let {
-                         VerEnIMDB(films[idfilm].imdbUrl!!, context)}},
+                    film.imdbUrl?.let {
+                         VerEnIMDB(film.imdbUrl!!, context)}},
                     Modifier
                         .weight(1f)
                         .padding(8.dp))
@@ -137,6 +130,21 @@ fun FilmDataScreen(navController: NavHostController, idfilm: Int )
 
                 }
             }
+            Row(modifier=Modifier
+                .padding(start=16.dp)
+                .padding(bottom=8.dp),
+                horizontalArrangement = Arrangement.Start
+            )
+            {
+
+                film.comments?.let {
+                    Text(it,
+                        modifier=Modifier,
+                       // textAlign = TextAlign.Start
+
+                    )
+                }
+            }
             Row {
                 Button(onClick = {navController.popBackStack()},
                     Modifier
@@ -144,7 +152,7 @@ fun FilmDataScreen(navController: NavHostController, idfilm: Int )
                         .padding(start = 8.dp)
                         .padding(end = 4.dp))
                 { Text(text = "Volver") }
-                Button(onClick = {navController.navigate("editar/{id}")}, Modifier
+                Button(onClick = {navController.navigate("editar/${film.id}")}, Modifier
                     .weight(1f)
                     .padding(start = 4.dp)
                     .padding(end = 8.dp))
