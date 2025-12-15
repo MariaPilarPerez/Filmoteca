@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AboutScreen(navController: NavHostController) {
-    Scaffold(topBar = { BarraSuperiorComun(navController)}, content = { padding ->
+    Scaffold(topBar = { BarraSuperiorComun(navController,true)}, content = { padding ->
         //columna con elementos Creado por, seguido de imagen y seguido de row con dos botones
         // y otro elemento de la columna al final que es un boton
         val context = LocalContext.current

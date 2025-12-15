@@ -72,21 +72,9 @@ fun FilmListScreen(
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     val context = LocalContext.current
     val isActionMode = remember{mutableStateOf(false)}
-    //val  pelis  = remember {  mutableStateListOf<Film>()}
-
-     //if(savedStateHandle!=null) {
-       //      val result: String? = savedStateHandle.get("key_result")
-
-       // result.let {
-       //     LaunchedEffect(it) {
-        //        showToast(context,)
-        //    }
-         //   }
-      //  }
-
-
-
-        Scaffold(topBar = { BarraSuperiorComun(navController, false) },
+    val selectedFilms  = remember {  mutableStateListOf<Film>()}
+    val isSelected = false
+    Scaffold(topBar = { BarraSuperiorComun(navController, false, false, isActionMode, selectedFilms) },
         content = { padding ->
 
            Column(
@@ -96,21 +84,40 @@ fun FilmListScreen(
                     //verticalArrangement = Arrangement.Center,
                     //horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(top = 100.dp)
-                            .padding(start = 16.dp)
-                    )
-                    {
-                        items(films)
-                        { film ->
-                            VistaFilm(film, onClick = {
-                                navController.navigate("datosfilm/${film.id}")
-                            }, isSelected = false, onLongClick = {})
-                        }
-                    }
-                }
+               LazyColumn(
+                   modifier = Modifier
+                       .weight(1f)
+                       .padding(top = 100.dp)
+                       .padding(start = 16.dp)
+               )
+               {
+                   items(films)
+                   { film ->
+                       VistaFilm(
+                           film,
+                           onClick = {
+                               if (isActionMode.value) {
+                                   if (selectedFilms.contains(film)) {
+                                       selectedFilms.remove(film)
+                                       if (selectedFilms.isEmpty()) {
+                                           isActionMode.value = false
+                                       }
+                                   } else {
+                                       selectedFilms.add(film)
+                                   }
+                               }
+                               navController.navigate("datosfilm/${film.id}")
+                           },
+                           onLongClick = {
+                               isActionMode.value = true  //seleccionamos o no una pelicula
+                               selectedFilms.add(film)
+                           },
+                           isSelected = selectedFilms.contains(film)
+                       )
+                   }
+               }
+           }
+
 
         }
     )
@@ -127,7 +134,7 @@ fun VistaFilm(film: Film, onClick:() -> Unit, onLongClick: () -> Unit, isSelecte
         )
     {
         film.imageResId?.let {
-            Image( painter=painterResource(it), contentDescription = null,
+            Image( painter=painterResource(if(isSelected) R.drawable.selected else it), contentDescription = null,
                 modifier=Modifier.size(100.dp))
         }
         Spacer(modifier=Modifier.padding(4.dp))

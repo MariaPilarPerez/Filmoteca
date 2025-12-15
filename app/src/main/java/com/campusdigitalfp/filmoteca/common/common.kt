@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
@@ -38,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.screens.Film
 import com.campusdigitalfp.filmoteca.screens.NuevoFilm
@@ -48,12 +50,12 @@ import com.campusdigitalfp.filmoteca.screens.NuevoFilm
 fun BarraSuperiorComun(
          navController: NavHostController,
          atras: Boolean = true,
-         c_edit: Boolean = false, //cancelación de la edición
-        // isActionMode: MutableState<Boolean> = remember{mutableStateOf(false)},
-        // selectedFilm: MutableList<Film> = remember {mutableStateListOf<Film>()}
+         c_edit: Boolean? = false, //cancelación de la edición
+         isActionMode: MutableState<Boolean> = mutableStateOf(false), //= remember{mutableStateOf(false)}
+         selectedFilm: MutableList<Film> = remember {mutableStateListOf<Film>()}
+
 )
 {
-
     var expanded by remember { mutableStateOf(false) }
     TopAppBar(
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
@@ -104,6 +106,19 @@ fun BarraSuperiorComun(
         actions = {
             if (!atras)
                 {
+               if( isActionMode.value){
+                   IconButton(onClick = {
+                       films.removeAll(selectedFilm)
+                       selectedFilm.clear()
+                       isActionMode.value = false
+                   }  )
+                   {
+                       Icon(imageVector = Icons.Filled.Delete,
+                           contentDescription = "Borrar seleccionados")
+                   }
+
+               }
+
                 IconButton(
                             onClick = { expanded = true }
                         ) {
