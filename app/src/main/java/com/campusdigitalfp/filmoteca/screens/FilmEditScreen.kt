@@ -1,6 +1,7 @@
 package com.campusdigitalfp.filmoteca.screens
 
 import android.media.Image
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.content.MediaType.Companion.Image
@@ -75,6 +76,9 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
             var genero by remember { mutableIntStateOf(film.genre) }
             var formato by remember { mutableIntStateOf(film.format) }
 
+
+
+            val TAG = "ED"  // para la generación de logs
 
             Column(
                 modifier = Modifier
@@ -245,6 +249,7 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
                                     "key_result",
                                     "RESULT_OK"
                                 )
+                                Log.v(TAG, "Guardado con éxito.")
                                 showToast(context, "Guardado con éxito")
                                 navController.popBackStack()
                             }, Modifier.weight(1f))
@@ -260,6 +265,7 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
                                     "key_result",
                                     "RESULT_CANCELED"
                                 )
+                                Log.v(TAG, "Edición cancelada")
                                 navController.popBackStack()
                             }, Modifier.weight(1f))
                             {
