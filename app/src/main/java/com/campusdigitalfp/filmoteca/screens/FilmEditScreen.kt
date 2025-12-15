@@ -49,6 +49,7 @@ import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
+import com.campusdigitalfp.filmoteca.showToast
 import com.campusdigitalfp.filmoteca.ui.theme.FilmotecaTheme
 
 
@@ -240,11 +241,11 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
                                if (index != -1) {
                                   FilmDataSource.films[index] = updatedFilm
                                }
-
                                 navController.previousBackStackEntry?.savedStateHandle?.set(
                                     "key_result",
                                     "RESULT_OK"
                                 )
+                                showToast(context, "Guardado con éxito")
                                 navController.popBackStack()
                             }, Modifier.weight(1f))
                             {

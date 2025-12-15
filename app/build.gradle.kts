@@ -57,6 +57,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime:1.10.0")
     implementation("androidx.compose.runtime:runtime-livedata:1.10.0")
     implementation("androidx.compose.runtime:runtime-rxjava2:1.10.0")
+    implementation(libs.androidx.foundation.layout)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

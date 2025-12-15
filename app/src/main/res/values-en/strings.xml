@@ -35,4 +35,5 @@
     <string name="menu_de_opciones">Options menu</string>
     <string name="filmoteca">FILM LIBRARY</string>
     <string name="ver_en_imdb">See in IMDB</string>
+    <string name="se_ha_creado_un_nuevo_film">Se ha creado un nuevo film</string>
 </resources>

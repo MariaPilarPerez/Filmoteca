@@ -54,6 +54,7 @@ fun FilmDataScreen(navController: NavHostController, film: Film )
 
 {
     val context=LocalContext.current
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
 
     Scaffold(topBar = {BarraSuperiorComun(navController,true)}, content = { padding ->
         Column(

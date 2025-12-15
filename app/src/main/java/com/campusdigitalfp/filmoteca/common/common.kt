@@ -1,10 +1,16 @@
 package com.campusdigitalfp.filmoteca.common
 
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Menu
 
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
@@ -25,7 +31,12 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.screens.Film
@@ -53,21 +64,41 @@ fun BarraSuperiorComun(
                     },
             navigationIcon = {
                 if (atras) {
-                    IconButton(onClick = {
-                        if (c_edit) {
-                            navController.previousBackStackEntry?.savedStateHandle?.set(
-                                "key_result",
-                                "RESULT_CANCELED"
-                            )
-                        }
-                        navController.popBackStack()
-                    })
-                    {
+                    Box(
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clickable {
+                                navController.navigate("lista") {
+                                    popUpTo("lista de films") { inclusive = true }
+                                }
+                            },
+                        contentAlignment = Alignment.Center
+                    ) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.volver)
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "Ir a inicio"
                         )
+
                     }
+
+//                    IconButton(onClick = {
+//                        if (c_edit) {
+//                            navController.previousBackStackEntry?.savedStateHandle?.set(
+//                                "key_result",
+//                                "RESULT_CANCELED"
+//                            )
+//                        }
+//
+//                        navController.popBackStack()
+//                    })
+//                    {
+//
+//                        Icon(
+//                            imageVector = Icons.Default.Home,
+//                            //imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                            contentDescription = stringResource(R.string.volver)
+//                        )
+//                    }
                 }
             },
         actions = {
@@ -77,7 +108,7 @@ fun BarraSuperiorComun(
                             onClick = { expanded = true }
                         ) {
                             Icon(
-                                imageVector = Icons.Default.MoreVert,
+                                imageVector = Icons.Default.Menu,
                                 contentDescription = stringResource(R.string.menu_de_opciones)
                             )
 

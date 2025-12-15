@@ -33,6 +33,7 @@ import com.campusdigitalfp.filmoteca.Datos.FilmDataSource
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.R
 import com.campusdigitalfp.filmoteca.common.BarraSuperiorComun
+import com.campusdigitalfp.filmoteca.showToast
 
 // una columna con tres botones
 
@@ -73,15 +74,15 @@ fun FilmListScreen(
     val isActionMode = remember{mutableStateOf(false)}
     //val  pelis  = remember {  mutableStateListOf<Film>()}
 
-       if(savedStateHandle!=null) {
-             val result: String? = savedStateHandle.get("key_result")
+     //if(savedStateHandle!=null) {
+       //      val result: String? = savedStateHandle.get("key_result")
 
-        result.let {
-            LaunchedEffect(it) {
-                Toast.makeText(context,it,Toast.LENGTH_SHORT)
-            }
-            }
-        }
+       // result.let {
+       //     LaunchedEffect(it) {
+        //        showToast(context,)
+        //    }
+         //   }
+      //  }
 
 
 
