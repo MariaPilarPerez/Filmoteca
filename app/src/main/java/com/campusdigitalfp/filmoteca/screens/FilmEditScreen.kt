@@ -181,12 +181,13 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
                             onDismissRequest = { expandedgenero = false }
                         )
                         {
-                            generoList.forEach { genero ->
+                            generoList.forEach { generos ->
                                 DropdownMenuItem(
                                     onClick = {
+                                        genero=generoList.indexOf(generos)  //guardamos genero elegido
                                         expandedgenero = false
                                     },
-                                    text = { Text(genero) },
+                                    text = { Text(text=generos) },   //mostramos genero elegido
                                 )
 
                             }
@@ -204,12 +205,14 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
                             onDismissRequest = { expandedformato = false }
                         )
                         {
-                            formatoList.forEach { formato ->
+                            formatoList.forEach { formatos ->
                                 DropdownMenuItem(
                                     onClick = {
+                                        formato=formatoList.indexOf(formatos)
                                         expandedformato = false
+
                                     },
-                                    text = { Text(formato) },
+                                    text = { Text( text=formatos) },
                                 )
 
                             }
@@ -249,7 +252,7 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
                                     "key_result",
                                     "RESULT_OK"
                                 )
-                                Log.v(TAG, "Guardado con éxito.")
+                                Log.i(TAG, "Guardado con éxito.")
                                 showToast(context, "Guardado con éxito")
                                 navController.popBackStack()
                             }, Modifier.weight(1f))
@@ -265,7 +268,8 @@ fun FilmEditScreen(navController: NavHostController, film: Film) {
                                     "key_result",
                                     "RESULT_CANCELED"
                                 )
-                                Log.v(TAG, "Edición cancelada")
+                                Log.i(TAG, "Edición cancelada")
+                                showToast(context, "Edición cancelada")
                                 navController.popBackStack()
                             }, Modifier.weight(1f))
                             {

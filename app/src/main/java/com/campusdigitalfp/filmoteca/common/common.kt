@@ -71,7 +71,8 @@ fun BarraSuperiorComun(
                             .size(50.dp)
                             .clickable {
                                 navController.navigate("lista") {
-                                    popUpTo("lista de films") { inclusive = true }
+                                    popUpTo("lista") { inclusive = true }
+                                    navController.popBackStack()
                                 }
                             },
                         contentAlignment = Alignment.Center
