@@ -1,9 +1,11 @@
 package com.campusdigitalfp.filmoteca.common
 
 
+import androidx.collection.emptyLongSet
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -37,7 +39,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.campusdigitalfp.filmoteca.Datos.FilmDataSource.films
 import com.campusdigitalfp.filmoteca.R
@@ -62,13 +66,15 @@ fun BarraSuperiorComun(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary),
             title = {
-                  Text(text = stringResource(R.string.filmoteca))
-                    },
+                // Text(text = stringResource(R.string.filmoteca))
+
+            }
+             ,
             navigationIcon = {
                 if (atras) {
                     Box(
                         modifier = Modifier
-                            .size(50.dp)
+                            .size(250.dp, 50.dp,)
                             .clickable {
                                 navController.navigate("lista") {
                                     popUpTo("lista") { inclusive = true }
@@ -77,32 +83,39 @@ fun BarraSuperiorComun(
                             },
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = "Ir a inicio"
+                        //  Icon(
+                        //      imageVector = Icons.Default.Home,
+                        //      contentDescription = "Ir a inicio"
+                        //  )
+
+                        Text(
+                            text = "FILMOTECA",
+                            modifier=Modifier.size(250.dp,50.dp)
+                                .padding(top=12.dp, start=16.dp),
+                            fontSize = 20.sp,
+                            //textAlign= TextAlign.Center
+
+
+                            //modifier = Modifier.size(size = 30.dp)
                         )
 
                     }
+                } else {
+                    Text(
+                        text = "FILMOTECA",
+                        modifier=Modifier.size(250.dp,50.dp)
+                            .padding(top=12.dp, start = 16.dp),
+                        fontSize = 20.sp,
+                        //textAlign= TextAlign.Center
 
-//                    IconButton(onClick = {
-//                        if (c_edit) {
-//                            navController.previousBackStackEntry?.savedStateHandle?.set(
-//                                "key_result",
-//                                "RESULT_CANCELED"
-//                            )
-//                        }
-//
-//                        navController.popBackStack()
-//                    })
-//                    {
-//
-//                        Icon(
-//                            imageVector = Icons.Default.Home,
-//                            //imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-//                            contentDescription = stringResource(R.string.volver)
-//                        )
-//                    }
+
+                        //modifier = Modifier.size(size = 30.dp)
+                    )
                 }
+
+
+
+
             },
         actions = {
             if (!atras)
